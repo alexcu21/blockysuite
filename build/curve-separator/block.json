@@ -9,12 +9,80 @@
   "description": "a block for create separators",
   "example": {},
   "supports": {
-    "html": false
+    "html": false,
+    "color": {
+      "background": true,
+      "link": true,
+      "text": true
+    },
+    "spacing": {
+      "padding": true
+    }
   },
   "attributes": {
+    "style": {
+      "type": "object",
+      "default": {
+        "color": {
+          "background": "#ec4899"
+        },
+        "spacing": {
+          "padding": {
+            "top": "80px",
+            "bottom": "80px",
+            "left": "50px",
+            "right": "50px"
+          }
+        }
+      }
+    },
     "enableTopCurve": {
       "type": "boolean",
       "default": true
+    },
+    "topWidth": {
+      "type": "number",
+      "default": 100
+    },
+    "topHeight": {
+      "type": "number",
+      "default": 100
+    },
+    "topFlipX": {
+      "type": "boolean",
+      "default": false
+    },
+    "topFlipY": {
+      "type": "boolean",
+      "default": false
+    },
+    "topColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "enableBottomCurve": {
+      "type": "boolean",
+      "default": true
+    },
+    "bottomWidth": {
+      "type": "number",
+      "default": 100
+    },
+    "bottomHeight": {
+      "type": "number",
+      "default": 100
+    },
+    "bottomFlipX": {
+      "type": "boolean",
+      "default": false
+    },
+    "bottomFlipY": {
+      "type": "boolean",
+      "default": false
+    },
+    "bottomColor": {
+      "type": "string",
+      "default": "#ffffff"
     }
   },
   "textdomain": "curve-separator",
