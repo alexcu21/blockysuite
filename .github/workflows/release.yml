@@ -1,0 +1,46 @@
+name: Release on main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build plugin
+        run: npm run build
+
+      - name: Create plugin ZIP
+        run: npm run plugin-zip
+
+      - name: Get version
+        id: get_version
+        run: |
+          if git describe --tags --abbrev=0 > /dev/null 2>&1; then
+            echo "version=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
+          else
+            echo "version=${GITHUB_SHA}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.get_version.outputs.version }}
+          name: Release ${{ steps.get_version.outputs.version }}
+          files: |
+            *.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 

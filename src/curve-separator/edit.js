@@ -11,7 +11,7 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls, InnerBlocks } from '@wordpress/block-editor';
 import { PanelBody, ToggleControl } from '@wordpress/components'
 
 /**
@@ -22,6 +22,9 @@ import { PanelBody, ToggleControl } from '@wordpress/components'
  */
 import './editor.scss';
 import metadata from './block.json'
+import { Curve } from './components/curve';
+import { TopCurveSettings } from './components/TopCurveSettings';
+import { BottomCurveSettings } from './components/BottomCurveSettings';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -32,23 +35,66 @@ import metadata from './block.json'
  * @return {Element} Element to render.
  */
 export default function Edit(props) {
-	console.log({props})
+	const {className, ...blockprops} = useBlockProps();
+
 	return (
 		<>
-			<p { ...useBlockProps() }>
-				{ __(
-					'Curve Separator – hello from the editor!',
-					'curve-separator'
-				) }
-			</p>
+			<section className={`${className} alignfull`} {...blockprops}>
+				{props.attributes.enableTopCurve && (
+					<Curve
+						height={props.attributes.topHeight}
+						width={props.attributes.topWidth}
+						flipX={props.attributes.topFlipX}
+						flipY={props.attributes.topFlipY}
+						color={props.attributes.topColor}
+					/>
+				)}
+				<InnerBlocks />
+				{props.attributes.enableBottomCurve && (
+					<Curve
+						isBottom
+						height={props.attributes.bottomHeight}
+						width={props.attributes.bottomWidth}
+						flipX={props.attributes.bottomFlipX}
+						flipY={props.attributes.bottomFlipY}
+						color={props.attributes.bottomColor}
+					/>
+				)}
+			</section>
 			<InspectorControls>
-				<PanelBody title={ __("Top Curve", metadata.texdomain) }>
-					<div style={{display: "flex"}}>
-						<ToggleControl onChange={(isChecked) => {props.setAttributes({enableTopCurve: isChecked})}} checked={props.attributes.enableTopCurve}/>
-							<span>
-								{ __("Enable top curve", metadata.textdomain) }
-							</span>
+				<PanelBody title={__("Top Curve", metadata.texdomain)}>
+					<div style={{ display: "flex" }}>
+						<ToggleControl
+							onChange={(isChecked) => {
+								props.setAttributes({ enableTopCurve: isChecked });
+							}}
+							checked={props.attributes.enableTopCurve}
+						/>
+						<span>{__("Enable top curve", metadata.textdomain)}</span>
 					</div>
+					{props.attributes.enableTopCurve && (
+						<TopCurveSettings 
+							attributes={props.attributes}
+							setAttributes={props.setAttributes}
+						/>
+					)}
+				</PanelBody>
+				<PanelBody title={__("Bottom Curve", metadata.texdomain)}>
+					<div style={{ display: "flex" }}>
+						<ToggleControl
+							onChange={(isChecked) => {
+								props.setAttributes({ enableBottomCurve: isChecked });
+							}}
+							checked={props.attributes.enableBottomCurve}
+						/>
+						<span>{__("Enable Bottom curve", metadata.textdomain)}</span>
+					</div>
+					{props.attributes.enableBottomCurve && (
+						<BottomCurveSettings 
+							attributes={props.attributes}
+							setAttributes={props.setAttributes}
+						/>
+					)}
 				</PanelBody>
 			</InspectorControls>
 		</>
