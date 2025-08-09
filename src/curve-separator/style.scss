@@ -7,4 +7,16 @@
 
 .wp-block-blockysuite-curve-separator {
 	position: relative;
+	background: #ec4899;
+	padding: 80px 50px;
+
+	.curve{
+		position: absolute;
+		left: 0;
+		width: 100%;
+		overflow: hidden;
+		&.top-curve{
+			top:0;
+		}
+	}
 }

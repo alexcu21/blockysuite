@@ -9,4 +9,15 @@
  */
 .wp-block-blockysuite-curve-separator {
   position: relative;
+  background: #ec4899;
+  padding: 80px 50px;
+}
+.wp-block-blockysuite-curve-separator .curve {
+  position: absolute;
+  right: 0;
+  width: 100%;
+  overflow: hidden;
+}
+.wp-block-blockysuite-curve-separator .curve.top-curve {
+  top: 0;
 }
