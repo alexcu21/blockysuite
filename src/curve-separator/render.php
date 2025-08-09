@@ -11,6 +11,13 @@
 ?>
 
 <div <? echo $block_wrapper_attributes; ?>>
+    <div class="curve top-curve">
+        <svg>
+            <path>
+
+            </path>
+        </svg>
+    </div>
     <? echo $content; ?>
 </div>
 
