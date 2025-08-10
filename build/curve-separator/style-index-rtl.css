@@ -21,3 +21,11 @@
 .wp-block-blockysuite-curve-separator .curve.top-curve {
   top: 0;
 }
+.wp-block-blockysuite-curve-separator .curve.bottom-curve {
+  bottom: 0;
+}
+.wp-block-blockysuite-curve-separator .curve svg {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
